@@ -1,6 +1,8 @@
 name: iOS build-only validation
 on:
   workflow_dispatch:
+  push:
+    branches: [codex/ios-build-only-e8dd79a]
 permissions:
   contents: read
   actions: read
