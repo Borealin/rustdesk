@@ -141,4 +141,6 @@ jobs:
           xcodebuild -version
           xcrun --sdk iphoneos --show-sdk-version
           git status --short
-          /usr/libexec/PlistBuddy -c 'Print :MinimumOSVersion' flutter/build/ios/archive/Runner.xcarchive/Products/Applications/RustDesk.app/Info.plist
+          app_plists=(flutter/build/ios/archive/Runner.xcarchive/Products/Applications/*.app/Info.plist)
+          test ${#app_plists[@]} -eq 1
+          /usr/libexec/PlistBuddy -c 'Print :MinimumOSVersion' "${app_plists[0]}"
