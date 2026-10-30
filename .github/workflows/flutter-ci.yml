@@ -132,9 +132,11 @@ jobs:
           rustup target add ${{ matrix.job.target }}
           cargo build --locked --features flutter,hwcodec --release --target aarch64-apple-ios --lib
           
-      - name: Build rustdesk
+      - name: Build rustdesk (diagnostic iOS 15 override)
         shell: bash
         run: |
+          printf 'IPHONEOS_DEPLOYMENT_TARGET = 15.0\n' > "$RUNNER_TEMP/ios-diagnostic.xcconfig"
+          export XCODE_XCCONFIG_FILE="$RUNNER_TEMP/ios-diagnostic.xcconfig"
           bash flutter/build_ios.sh --no-codesign
 
       - name: Verify unsigned archive
